@@ -12,8 +12,7 @@ map<string, int> Day2:: get_max_seen(string& line) {
     map<string, int> max_seen;
     for (const string& color:_colors) {
         max_seen[color] = 0;
-        regex r("(\\d+) " + color);
-        sregex_iterator iter(line.begin(), line.end(), r);
+        sregex_iterator iter(line.begin(), line.end(), _color_regexes[color]);
         sregex_iterator end;
         while (iter != end) {
             int seen = stoi((*iter)[1]);
@@ -31,7 +30,7 @@ int Day2::evaluate_game(string& line) {
         return 0;
     }
     smatch sm;
-    regex_search(line, sm, regex("Game (\\d+):"));
+    regex_search(line, sm, _game_num_regex);
     int game_round = stoi(sm[1]);
 
     auto max_seen = get_max_seen(line);
@@ -56,9 +55,6 @@ int Day2::get_power(string& line) {
     if (line.empty()) {
         return 0;
     }
-    smatch sm;
-    regex_search(line, sm, regex("Game (\\d+):"));
-    int game_round = stoi(sm[1]);
 
     auto max_seen = get_max_seen(line);
     return max_seen["red"] * max_seen["green"] * max_seen["blue"];

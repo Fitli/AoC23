@@ -44,7 +44,7 @@ void Task::print_results() {
 void Task::measure_time() {
     int repeats = 10;
     chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    for (size_t i = 0; i < 10; i++)
+    for (size_t i = 0; i < repeats; i++)
     {
         run1(false);
         _in_file.clear();
@@ -54,7 +54,7 @@ void Task::measure_time() {
     cout << "1: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()/(1000.0*repeats) << endl;
 
     chrono::steady_clock::time_point begin2 = std::chrono::steady_clock::now();
-    for (size_t i = 0; i < 10; i++)
+    for (size_t i = 0; i < repeats; i++)
     {
         run1(false);
         _in_file.clear();
