@@ -4,11 +4,11 @@
 #include <iostream>
 #include <map>
 #include <regex>
-#include "Day2.h"
+#include "Day02.h"
 
 using namespace std;
 
-map<string, int> Day2:: get_max_seen(string& line) {
+map<string, int> Day02:: get_max_seen(string& line) {
     map<string, int> max_seen;
     for (const string& color:_colors) {
         max_seen[color] = 0;
@@ -25,7 +25,7 @@ map<string, int> Day2:: get_max_seen(string& line) {
     return max_seen;
 }
 
-int Day2::evaluate_game(string& line) {
+int Day02::evaluate_game(string& line) {
     if (line.empty()) {
         return 0;
     }
@@ -40,10 +40,10 @@ int Day2::evaluate_game(string& line) {
     return 0;
 }
 
-void Day2::run1(bool print_result) {
+void Day02::run1(bool print_result) {
     string line;
     int suma = 0;
-    while(getline(_in_file, line)) {
+    while(getline(_input, line)) {
         suma += evaluate_game(line);
     }
     if(print_result) {
@@ -51,7 +51,7 @@ void Day2::run1(bool print_result) {
     }
 }
 
-int Day2::get_power(string& line) {
+int Day02::get_power(string& line) {
     if (line.empty()) {
         return 0;
     }
@@ -60,10 +60,10 @@ int Day2::get_power(string& line) {
     return max_seen["red"] * max_seen["green"] * max_seen["blue"];
 }
 
-void Day2::run2(bool print_result) {
+void Day02::run2(bool print_result) {
     string line;
     int suma = 0;
-    while(getline(_in_file, line)) {
+    while(getline(_input, line)) {
         suma += get_power(line);
     }
     if(print_result) {

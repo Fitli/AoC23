@@ -6,16 +6,17 @@
 #include <fstream>
 #include <iostream>
 #include <chrono>
+#include <utility>
 
 #include "Task.h"
 
 using namespace std;
 
 
-Task::Task(string name, string in_file)
+Task::Task(string name, const string& in_file)
 {
-    _name = name;
-    _in_file = ifstream(in_file);
+    _name = std::move(name);
+    _input = ifstream(in_file);
 }
 
 void Task::run1(bool print_result) {
@@ -34,8 +35,8 @@ void Task::print_results() {
     cout << _name << " - Task 1: ";
     run1(true);
     cout << flush;
-    _in_file.clear();
-    _in_file.seekg(0);
+    _input.clear();
+    _input.seekg(0);
     cout << _name << " - Task 2: ";
     run2(true);
     cout << flush;
@@ -47,8 +48,8 @@ void Task::measure_time() {
     for (size_t i = 0; i < repeats; i++)
     {
         run1(false);
-        _in_file.clear();
-        _in_file.seekg(0);
+        _input.clear();
+        _input.seekg(0);
     }
     chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     cout << "1: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()/(1000.0*repeats) << endl;
@@ -56,9 +57,9 @@ void Task::measure_time() {
     chrono::steady_clock::time_point begin2 = std::chrono::steady_clock::now();
     for (size_t i = 0; i < repeats; i++)
     {
-        run1(false);
-        _in_file.clear();
-        _in_file.seekg(0);
+        run2(false);
+        _input.clear();
+        _input.seekg(0);
     }
     chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
     cout << "2: " << std::chrono::duration_cast<std::chrono::microseconds>(end2 - begin2).count()/(1000.0*repeats) << endl;

@@ -30,11 +30,11 @@ vector<int> Day03::row_from_line(string &line) {
 
 vector<vector<int>> Day03::create_grid() {
     string line;
-    _in_file >> line;
+    _input >> line;
     vector<vector<int>> grid;
     grid.emplace_back(line.length() + 2, -1);
     grid.push_back(row_from_line(line));
-    while (_in_file >> line) {
+    while (_input >> line) {
         if (line.empty()) {
             continue;
         }

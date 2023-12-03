@@ -1,22 +1,23 @@
 #include "cstdio"
 
 #include "infra/Task.h"
-#include "tasks/Day1.h"
-#include "tasks/Day2.h"
+#include "tasks/Day01.h"
+#include "tasks/Day02.h"
 #include "tasks/Day03.h"
 
 int main()
 {
-    Day1 d1 = Day1("Day1", "../input/input01.txt");
-    d1.print_results();
-    d1.measure_time();
+    Day01 d1 = Day01("Day01", "../input/input01.txt");
+    Day02 d2 = Day02("Day02", "../input/input02.txt");
+    Day03 d3 = Day03("Day03", "../input/input03.txt");
 
-    Day2 d2 = Day2("Day2", "../input/input02.txt");
-    d2.print_results();
-    d2.measure_time();
+    vector<Task *> tasks{
+        &d1, &d2, &d3
+    };
 
-    Day03 d3 = Day03("Day3", "../input/input03.txt");
-    d3.print_results();
-    d3.measure_time();
+    for (auto task: tasks) {
+        task->print_results();
+        task->measure_time();
+    }
     return 0;
 }

@@ -2,17 +2,17 @@
 // Created by ivana.krumlova on 2.12.2023.
 //
 
-#ifndef AOC2023_DAY2_H
-#define AOC2023_DAY2_H
+#ifndef AOC2023_DAY02_H
+#define AOC2023_DAY02_H
 
 #include <vector>
 #include <regex>
 
 #include "../infra/Task.h"
 
-class Day2: public Task {
+class Day02: public Task {
 public:
-    Day2(string name, string in_file) : Task(std::move(name), std::move(in_file)) {
+    Day02(string name, string in_file) : Task(std::move(name), std::move(in_file)) {
         for (const string& color:_colors) {
             _color_regexes[color] = regex("(\\d+) " + color);
         }
@@ -31,4 +31,4 @@ private:
 };
 
 
-#endif //AOC2023_DAY2_H
+#endif //AOC2023_DAY02_H

@@ -2,17 +2,17 @@
 // Created by ivana.krumlova on 2.12.2023.
 //
 
-#ifndef AOC2023_DAY1_H
-#define AOC2023_DAY1_H
+#ifndef AOC2023_DAY01_H
+#define AOC2023_DAY01_H
 
 
 #include <map>
 #include "../infra/Task.h"
-class Day1 :
+class Day01 :
         public Task
 {
 public:
-    Day1(string name, string in_file) : Task(name, in_file) {};
+    Day01(string name, string in_file) : Task(name, in_file) {};
     map<string, int> num_chars();
     string min_map_element(map<string, int> m);
     int get_occurence(string str, map<string, int>& to_search, bool first);
@@ -38,4 +38,4 @@ private:
 };
 
 
-#endif //AOC2023_DAY1_H
+#endif //AOC2023_DAY01_H
