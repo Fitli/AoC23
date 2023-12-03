@@ -3,6 +3,7 @@
 #include "infra/Task.h"
 #include "tasks/Day1.h"
 #include "tasks/Day2.h"
+#include "tasks/Day03.h"
 
 int main()
 {
@@ -13,6 +14,9 @@ int main()
     Day2 d2 = Day2("Day2", "../input/input02.txt");
     d2.print_results();
     d2.measure_time();
-    //getchar();
+
+    Day03 d3 = Day03("Day3", "../input/input03.txt");
+    d3.print_results();
+    d3.measure_time();
     return 0;
 }
