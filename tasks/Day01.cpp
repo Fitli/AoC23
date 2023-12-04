@@ -7,61 +7,56 @@
 #include <iostream>
 #include <map>
 #include <algorithm>
+#include <regex>
 
 #include "Day01.h"
 
-map<string, int> Day01::num_chars()
-{
-    map<string, int> num_ch{};
-    for (int i = 0; i < 10; i++) {
-        num_ch.insert({ to_string(i), i });
+int Day01::str_to_num(const string& str) {
+    if (str.length() == 1) {
+        return stoi(str);
     }
-    return num_ch;
+    return num_strings[str];
 };
 
-string Day01::min_map_element(map<string, int> m)
-{
-    auto a = *min_element(m.begin(), m.end(), [](std::pair<std::string, int> l, std::pair<std::string, int> r) -> bool { return l.second < r.second; });
-    return a.first;
-}
-
-int Day01::get_occurence(string str, map<string, int>& to_search, bool first) {
-    auto first_occs = map<string, int>{};
-    for (const auto& kv : to_search) {
-        size_t pos = first ? str.find(kv.first) : str.rfind(kv.first);
-        if (pos != string::npos) {
-            first_occs[kv.first] = first ? pos : str.length() - pos;
-            str = first ? str.substr(0, pos + 2) : str.substr(pos, string::npos);
-        }
-    }
-    return to_search[min_map_element(first_occs)];
-}
-
-int Day01::get_num(string& str, map<string, int>& to_search) {
-    int first = get_occurence(str, to_search, true);
-    int last = get_occurence(str, to_search, false);
+int Day01::get_num(regex &r_front, regex &r_back, string &line) {
+    smatch sm;
+    regex_search(line, sm, r_front);
+    int first = str_to_num(sm.str());
+    reverse(line.begin(), line.end());
+    regex_search(line, sm, r_back);
+    string found_str = sm.str();
+    reverse(found_str.begin(), found_str.end());
+    int last = str_to_num(found_str);
     return 10 * first + last;
 }
 
 void Day01::run1(bool print_result) {
-    std::string line = "";
+    std::string line;
+    regex r("(\\d)");
     int suma = 0;
-    map<string, int> to_search = num_chars();
     while (_input >> line) {
-        suma += get_num(line, to_search);
+        suma += get_num(r, r, line);
     }
     if (print_result)
         std::cout << suma << std::endl;
 }
 
 void Day01::run2(bool print_result) {
-    std::string line = "";
-    map<string, int> to_search = num_chars();
-    to_search.insert(num_strings.begin(), num_strings.end());
+    string num_str_regex_str = "";
+    for (const auto& n:num_strings) {
+        num_str_regex_str += "|" + n.first;
+    }
+    string reverse_regex_str{num_str_regex_str};
+    reverse(reverse_regex_str.begin(), reverse_regex_str.end());
+
+    regex front_r("\\d" + num_str_regex_str);
+    regex back_r(reverse_regex_str + "\\d");
+
+    std::string line;
 
     int suma = 0;
     while (_input >> line) {
-        suma += get_num(line, to_search);
+        suma += get_num(front_r, back_r, line);
     }
     if(print_result)
         std::cout << suma << std::endl;
