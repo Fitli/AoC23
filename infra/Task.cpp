@@ -39,7 +39,8 @@ void Task::print_results() {
     _input.seekg(0);
     cout << _name << " - Task 2: ";
     run2(true);
-    cout << flush;
+    _input.clear();
+    _input.seekg(0);
 }
 
 void Task::measure_time() {
