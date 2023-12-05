@@ -120,7 +120,8 @@ public:
 private:
     vector<string> resources {"seed", "soil", "fertilizer", "water", "light", "temperature", "humidity", "location"};
     regex seed_regex{" (\\d+)"};
-    regex resource_regex;
+    regex resource_regex{};
+    regex mapping_regex{R"((\d+) (\d+) (\d+))"};
 
     vector<long long> parse_seeds() {
         string line;
@@ -146,7 +147,7 @@ private:
         rm.to = sm[2].str();
         getline(_input, line);
         while(!line.empty()) {
-            regex_search(line, sm, regex(R"((\d+) (\d+) (\d+))"));
+            regex_search(line, sm, mapping_regex);
             long long start = stoll(sm[2].str());
             rm.mapping[tuple<long long, long long>(start,
                                                    start + stoll(sm[3].str()))] = stoll(sm[1].str())-start;
