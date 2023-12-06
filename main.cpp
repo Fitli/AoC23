@@ -1,7 +1,7 @@
 #include "cstdio"
 
 #include "infra/Task.h"
-#include "tasks/Day01.hpp"
+#include "tasks/Day01.h"
 #include "tasks/Day02.h"
 #include "tasks/Day03.h"
 #include "tasks/Day04.h"
