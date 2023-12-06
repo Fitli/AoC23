@@ -20,9 +20,11 @@ public:
     Day04(string name, const string& in_file) : Task(std::move(name), in_file) { };
     void run1(bool print_result) override {
         int sum = 0;
-        string line;
-        while (getline(_input, line)) {
-            int num_matching = parse_line(line).num_matching;
+        Card card{};
+        string _;
+        _input >> _;
+        while (parse_card(card)) {
+            int num_matching = card.num_matching;
             if(num_matching > 0)
                 sum += pow(2, num_matching-1);
         }
@@ -31,11 +33,16 @@ public:
         }
     }
     void run2(bool print_result) override {
-        string line;
+        string _;
+        _input >> _;
         vector<Card> cards;
-        while (getline(_input, line)) {
-            cards.push_back(parse_line(line));
-        }
+        Card card;
+        int i = 0;
+        do {
+            cards.emplace_back();
+            i++;
+        } while (parse_card(cards[i-1]));
+        cards.pop_back();
         int total_sum = 0;
         for (int i = 0; i < cards.size(); ++i) {
             total_sum += cards[i].num_cards;
@@ -48,25 +55,23 @@ public:
         }
     }
 private:
-    Card parse_line(string &line) {
-        sregex_iterator iter(line.begin(), line.end(), R);
-        sregex_iterator end;
-        Card card;
-        iter++;
-        set<int> winning{};
-        while (iter->str() != "|") {
-            winning.insert(stoi(iter->str()));
-            iter++;
+    bool parse_card(Card &card) {
+        card.num_cards = 1;
+        card.num_matching = 0;
+        string token;
+        if(!(_input >> token)) { //card number
+            return false;
         }
-        iter++;
-        while(iter != end) {
-            if(winning.contains(stoi(iter->str()))) {
+        set<int> winning{};
+        while (_input >> token and token != "|") {
+            winning.insert(stoi(token));
+        }
+        while (_input >> token and token != "Card") {
+            if (winning.contains(stoi(token))) {
                 card.num_matching++;
             }
-            iter++;
         }
-
-        return card;
+        return true;
     }
     const regex R{"\\d+|\\|"};
 };
