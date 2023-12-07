@@ -16,8 +16,8 @@ using namespace std;
 class Task
 {
 public:
-    Task(string name, const string& in_file) {
-        _name = std::move(name);
+    Task(string number, const string& in_file) {
+        _name = std::move(number);
         _input = ifstream(in_file);
     }
 
@@ -64,7 +64,9 @@ public:
     }
 
     void write_readme_line(ofstream &readme) const {
-        readme << "| " << _name <<"\t|\t| " << time_run1 <<"\t | " << time_run2 <<"\t |" << endl;
+        string filename = "Day" + _name + ".h";
+        readme << "| Day " << _name <<"\t|[" << filename << "](tasks/" << filename << ")\t| ";
+        readme << time_run1 <<" ms\t | " << time_run2 <<" ms\t |" << endl;
     }
 
     string _name;
