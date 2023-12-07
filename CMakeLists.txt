@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS -Ofast)
 
 add_executable(aoc2023 main.cpp
-        infra/Task.cpp
         infra/Task.h
         tasks/Day01.h
         tasks/Day02.h

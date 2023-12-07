@@ -1,5 +1,3 @@
-#include "cstdio"
-
 #include "infra/Task.h"
 #include "tasks/Day01.h"
 #include "tasks/Day02.h"
@@ -8,6 +6,15 @@
 #include "tasks/Day05.h"
 #include "tasks/Day06.h"
 #include "tasks/Day07.h"
+
+void generate_readme(string filename, vector<Task *> tasks) {
+    ofstream readme(filename);
+    readme << "|\t| Solution \t| Execution time part 1\t | Execution time part 2\t|" << endl;
+    readme <<"|---------|---|---|---|" << endl;
+    for(Task *task:tasks) {
+        task->write_readme_line(readme);
+    }
+}
 
 int main()
 {
@@ -24,8 +31,11 @@ int main()
     };
 
     for (auto task: tasks) {
+        task->run_benchmarks();
         task->print_results();
-        task->measure_time();
     }
+
+    generate_readme("../readme.md", tasks);
     return 0;
 }
+
