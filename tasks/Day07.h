@@ -16,12 +16,12 @@ using namespace std;
 
 class CamelCard {
 public:
-    CamelCard(const string& values, int bid_, bool task2=false) {
+    CamelCard(const string& values, int bid_) {
         string_values = values;
         bid = bid_;
-        type = get_type(values, task2);
+        type = get_type(values);
     }
-    static int get_type(const string& values, bool task2 = false) {
+    static int get_type(const string& values) {
         map<char, int> counts;
         for(const char &c:values) {
             if(counts.contains(c)) {
@@ -38,22 +38,22 @@ public:
         }
         switch (counts.size()) {
             case 5:
-                if (task2 and counts.contains('1')) {
+                if (counts.contains('1')) {
                     return 2;
                 }
                 return 1;
             case 4:
-                if (task2 and counts.contains('1')) {
+                if (counts.contains('1')) {
                     return 4;
                 }
                 return 2;
             case 3:
-                if (task2 and counts.contains('1')) {
+                if (counts.contains('1')) {
                     return (counts['1'] == 1 and max_count == 2)?5:6;
                 }
                 return (max_count == 2) ? 3 : 4;
             case 2:
-                if (task2 and counts.contains('1')) {
+                if (counts.contains('1')) {
                     return 7;
                 }
                 return (max_count == 3) ? 5 : 6;
@@ -102,11 +102,34 @@ class Day07: public Task {
 public:
     Day07(string name, const string& in_file) : Task(std::move(name), in_file) {};
     void run1(bool print_result) override {
+        long long result = run(false);
+        if(print_result) {
+            cout << result << endl;
+        }
+    }
+
+    void run2(bool print_result) override {
+        long long result = run(true);
+        if(print_result) {
+            cout << result << endl;
+        }
+    }
+
+private:
+    long long run(bool task_2) {
         vector<CamelCard> cards;
         string values;
         string bid;
         while(_input >> values) {
             _input >> bid;
+            if(task_2)
+            {
+                for (int i = 0; i < 5; ++i) {
+                    if (values[i] == 'J') {
+                        values[i] = '1';
+                    }
+                }
+            }
             cards.emplace_back(values, stoi(bid));
         }
         sort(cards.begin(), cards.end());
@@ -114,34 +137,8 @@ public:
         for (int i = 0; i < cards.size(); ++i) {
             sum += (i+1)*cards[i].bid;
         }
-        if(print_result) {
-            cout <<sum << endl;
-        }
-    }
-
-    void run2(bool print_result) override {
-        vector<CamelCard> cards;
-        string values;
-        string bid;
-        while(_input >> values) {
-            _input >> bid;
-            for (int i = 0; i < 5; ++i) {
-                if (values[i] == 'J') {
-                    values[i] = '1';
-                }
-            }
-            cards.emplace_back(values, stoi(bid), true);
-        }
-        sort(cards.begin(), cards.end());
-        long long sum = 0;
-        for (int i = 0; i < cards.size(); ++i) {
-            sum += (i+1)*cards[i].bid;
-        }
-        if(print_result) {
-            cout <<sum << endl;
-        }
+        return sum;
     }
 };
-
 
 #endif //AOC2023_DAY07_H
