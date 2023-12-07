@@ -7,6 +7,7 @@
 #include "tasks/Day04.h"
 #include "tasks/Day05.h"
 #include "tasks/Day06.h"
+#include "tasks/Day07.h"
 
 int main()
 {
@@ -16,9 +17,10 @@ int main()
     Day04 d4 = Day04("Day04", "../input/input04.txt");
     Day05 d5 = Day05("Day05", "../input/input05.txt");
     Day06 d6 = Day06("Day06", "../input/input06.txt");
+    Day07 d7 = Day07("Day07", "../input/input07.txt");
 
     vector<Task *> tasks{
-        &d1, &d2, &d3, &d4, &d5, &d6
+        &d1, &d2, &d3, &d4, &d5, &d6, &d7
     };
 
     for (auto task: tasks) {
