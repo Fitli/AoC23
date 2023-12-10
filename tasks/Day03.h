@@ -41,7 +41,7 @@ public:
 
 private:
     static vector<int> row_from_line(string &line) {
-        vector<int> row(line.length() + 2, EMPTY);
+        vector<int> row(line.length() + 2, -1);
         int i = 0;
         for (char c:line) {
             i++;
@@ -65,7 +65,7 @@ private:
         string line;
         _input >> line;
         vector<vector<int>> grid;
-        grid.emplace_back(line.length() + 2, EMPTY);
+        grid.emplace_back(line.length() + 2, -1);
         grid.push_back(row_from_line(line));
         while (_input >> line) {
             if (line.empty()) {
@@ -73,7 +73,7 @@ private:
             }
             grid.push_back(row_from_line(line));
         }
-        grid.emplace_back(line.length() + 2, EMPTY);
+        grid.emplace_back(line.length() + 2, -1);
         return grid;
     }
 
