@@ -46,8 +46,8 @@ public:
     }
 
     void run_benchmarks() {
-        time_run1 = measure_time_run([this](){run1(false);}, 10);
-        time_run2 = measure_time_run([this](){run2(false);}, 10);
+        time_run1 = measure_time_run([this](){run1(false);}, 100);
+        time_run2 = measure_time_run([this](){run2(false);}, 100);
     }
 
     double measure_time_run(auto func, int repeats) {
