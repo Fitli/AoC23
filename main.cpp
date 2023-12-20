@@ -13,6 +13,7 @@
 #include "tasks/Day12.h"
 #include "tasks/Day13.h"
 #include "tasks/Day14.h"
+#include "tasks/Day19.h"
 
 void generate_readme(string filename, vector<Task *> tasks) {
     ofstream readme(filename);
@@ -40,9 +41,12 @@ int main()
     Day13 d13 = Day13("13", "../input/input13.txt");
     Day14 d14 = Day14("14", "../input/input14.txt");
 
+    Day19 d19 = Day19("19", "../input/input19.txt");
+
     vector<Task *> tasks{
         &d1, &d2, &d3, &d4, &d5, &d6, &d7, &d8, &d9,
-        &d10, &d11, &d12, &d13, &d14
+        &d10, &d11, &d12, &d13, &d14,
+        &d19
     };
 
     for (auto task: tasks) {
